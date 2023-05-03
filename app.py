@@ -1,35 +1,20 @@
-import openai
 import os
+import openai
+import json
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from chatbot import OpenAIChatbot
 
-# Set up your API key
-openai.api_key = "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"
+app = Flask(__name__)
+CORS(app)  # Enable CORS for your Flask app
+api_key = "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"
+chatbot = OpenAIChatbot(api_key)
 
-def chat_with_gpt(user_message):
-    conversation = [
-        {
-            "role": "system",
-            "content": "You are a helpful assistant that understands and answers user questions."
-        },
-        {
-            "role": "user",
-            "content": user_message
-        }
-    ]
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json['message']
+    assistant_message = chatbot.respond(user_message)
+    return jsonify({"assistant_message": assistant_message})
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=conversation
-    )
-
-    assistant_message = response['choices'][0]['message']['content']
-    return assistant_message
-
-if __name__ == "__main__":
-    while True:
-        user_input = input("User: ")
-        if user_input.lower() == "exit":
-            break
-
-        assistant_response = chat_with_gpt(user_input)
-        print("Assistant:", assistant_response)
-
+if __name__ == '__main__':
+    app.run(debug=True)
