@@ -25,7 +25,7 @@ class OpenAIChatbot:
         self.conversation_history.append({"role": "assistant", "content": assistant_message})
         return assistant_message
 
-api_key = "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"  # Replace this with your actual OpenAI API key
+api_key = ""  # Replace this with your actual OpenAI API key
 
 #chatbot = OpenAIChatbot(api_key)
 #
