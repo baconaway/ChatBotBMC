@@ -7,7 +7,7 @@ from chatbot import OpenAIChatbot
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for your Flask app
-api_key = "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"
+api_key = ""
 chatbot = OpenAIChatbot(api_key)
 
 @app.route('/chat', methods=['POST'])
